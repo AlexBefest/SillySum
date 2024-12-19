@@ -1,12 +1,13 @@
 {
-    "display_name": "Chat Summarizer",
+    "display_name": "Summarize",
     "loading_order": 9,
     "requires": [],
-    "optional": [],
+    "optional": [
+        "summarize"
+    ],
     "js": "index.js",
     "css": "style.css",
-    "author": "yourNameHere",
+    "author": "Cohee#1207",
     "version": "1.0.0",
-    "homePage": "yourUrlHere",
-    "auto_update": true
-  }
+    "homePage": "https://github.com/SillyTavern/SillyTavern"
+}
