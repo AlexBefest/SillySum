@@ -1,5 +1,5 @@
 {
-    "display_name": "Summarize",
+    "display_name": "SummarizeChunks",
     "loading_order": 9,
     "requires": [],
     "optional": [
@@ -7,7 +7,7 @@
     ],
     "js": "index.js",
     "css": "style.css",
-    "author": "Cohee#1207",
+    "author": "C11",
     "version": "1.0.0",
     "homePage": "https://github.com/SillyTavern/SillyTavern"
 }

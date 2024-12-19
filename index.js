@@ -708,7 +708,20 @@ async function summarizeChatMain(context, force, skipWIAN) {
                 return null;
             }
 
-            summary = await generateRaw(rawPrompt, '', false, false, prompt, extension_settings.memory.overrideResponseLength);
+            // Разбиваем сообщения на чанки по 25 сообщений
+            const chunkSize = 25;
+            const chunks = [];
+            for (let i = 0; i < rawPrompt.length; i += chunkSize) {
+                chunks.push(rawPrompt.slice(i, i + chunkSize));
+            }
+
+            // Обрабатываем каждый чанк
+            for (const chunk of chunks) {
+                const chunkPrompt = `${prompt}\n\n${chunk}`;
+                const chunkSummary = await generateRaw(chunkPrompt, '', false, false, prompt, extension_settings.memory.overrideResponseLength);
+                summary += chunkSummary + '\n';
+            }
+
             index = lastUsedIndex;
         } finally {
             inApiCall = false;
@@ -1055,9 +1068,11 @@ function setupListeners() {
     });
 }
 
+// Другой код...
+
 jQuery(async function () {
     async function addExtensionControls() {
-        const settingsHtml = await renderExtensionTemplateAsync('memory', 'settings', { defaultSettings });
+        const settingsHtml = await $.get('settings.html'); // Загрузка HTML из файла
         $('#summarize_container').append(settingsHtml);
         setupListeners();
         $('#summaryExtensionPopoutButton').off('click').on('click', function (e) {
