@@ -1068,11 +1068,28 @@ function setupListeners() {
     });
 }
 
-// Другой код...
+// Добавляем новый код для тестовой кнопки
+const testExtensionName = "test-extension";
+const testExtensionFolderPath = `scripts/extensions/third-party/${testExtensionName}`;
 
-jQuery(async function () {
+async function loadTestSettings() {
+    extension_settings[testExtensionName] = extension_settings[testExtensionName] || {};
+}
+
+function onTestButtonClick() {
+    toastr.info("Button clicked!", "Test Extension");
+}
+
+jQuery(async () => {
+    // Загружаем HTML для тестовой кнопки
+    const testSettingsHtml = await $.get(`${testExtensionFolderPath}/test.html`);
+    $("#extensions_settings").append(testSettingsHtml);
+    $("#test_button").on("click", onTestButtonClick);
+    loadTestSettings();
+
+    // Остальной код инициализации
     async function addExtensionControls() {
-        const settingsHtml = await $.get('settings.html'); // Загрузка HTML из файла
+        const settingsHtml = await renderExtensionTemplateAsync('memory', 'settings', { defaultSettings });
         $('#summarize_container').append(settingsHtml);
         setupListeners();
         $('#summaryExtensionPopoutButton').off('click').on('click', function (e) {
